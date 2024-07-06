@@ -30,7 +30,7 @@
                                     <table id="example2" class="table table-bordered text-nowrap border-bottom">
                                         <thead>
                                         <div class="d-flex justify-content-end mb-4">
-                                            <a href="" class="btn btn-primary">Add Category</a>
+                                            <a href="{{route('category.create')}}" class="btn btn-primary">Add Category</a>
                                         </div>
                                         <tr>
                                             <th class="border-bottom-0">Sl</th>
@@ -38,19 +38,50 @@
                                             <th class="border-bottom-0">Image</th>
                                             <th class="border-bottom-0">Status</th>
                                             <th class="border-bottom-0">Action</th>
-                                            <th class="border-bottom-0">Start date</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($categories as $category)
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$category->name}}</td>
+                                            <td><img src="{{asset($category->image)}}" height="50" width="80"></td>
+                                            <td>
+                                                @if($category->status==1)
 
+                                                <a href="{{route('category.show',$category->id)}}" class="btn btn-primary">Active</a>
+                                                @else
+                                                    <a href="{{route('category.show',$category->id)}}" class="btn btn-warning">Inactive</a>
+                                                    @endif
+
+                                            </td>
+
+                                            <td>
+                                                <a href="{{route('category.edit',$category->id)}}" class="btn btn-success btn-lg" title="Edit">
+                                                    <i class="ri-edit-box-fill"></i>
+                                                </a>
+
+                                                <button type="button" onclick="confirmDelete({{$category->id}});" class="btn btn-danger btn-lg" title="Delete">
+                                                    <i class="ri-chat-delete-fill"></i>
+                                                </button>
+
+                                                <form action="{{route('category.destroy',$category->id)}}" method="POST" id="categoryDeleteForm{{$category->id}}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                <script>
+                                                    function confirmDelete(categoryId) {
+                                                        var confirmDelete = confirm('Are you sure you want to delete this?');
+                                                        if (confirmDelete) {
+                                                            document.getElementById('categoryDeleteForm' + categoryId).submit();
+                                                        } else {
+                                                            return false;
+                                                        }
+                                                    }
+                                                </script>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -65,3 +96,4 @@
         </div>
     </div>
 @endsection
+
