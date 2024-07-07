@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-    Category Edit Page
+    SubCategory Add Page
 @endsection
 
 @section('body')
@@ -23,20 +23,34 @@
                     <div class="col-sm-12">
                         <div class="card box-shadow-0">
                             <div class="card-header border-bottom">
-                                <h4 class="card-title">Category Edit Form</h4>
+                                <h4 class="card-title">SubCategory Add Form</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data" id="categoryForm">
+                                <form action="{{ route('subcategory.store') }}" method="POST" enctype="multipart/form-data" id="categoryForm">
                                     @csrf
-                                    @method('PUT')
                                     <div class="form-group">
-                                        <label for="nameInput">Name</label>
-                                        <input type="text" name="name" required value="{{ $category->name }}" class="form-control" id="nameInput" placeholder="Name">
+                                        <label for="exampleInputEmail2">Category Name</label>
+                                       <select class="form-control" name="category_id" >
+                                           <option disabled selected>---- Select Category----</option>
+                                           @foreach($categories as $category)
+                                           <option value="{{$category->id}}">{{$category->name}}</option>
+                                           @endforeach
+                                       </select>
+                                        @error('category_id')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail2">Name</label>
+                                        <input type="text" name="name"  class="form-control" id="exampleInputEmail2" placeholder="Name">
+                                    </div>
+                                    @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                     <div class="form-group">
                                         <label for="formFile" class="form-label">Image</label>
                                         <input class="form-control file-input" type="file" name="image" id="formFile" onchange="previewImage(this)">
-                                        <img id="imagePreview" src="{{ asset($category->image) }}" alt="Category Image Preview" class="img-fluid {{ $category->image ? '' : 'd-none' }}" height="80" width="120">
+                                        <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid d-none" height="80" width="120">
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
                                         <button type="submit" class="btn btn-primary btn-w-md mt-3">Submit</button>
@@ -69,3 +83,4 @@
         }
     </script>
 @endsection
+

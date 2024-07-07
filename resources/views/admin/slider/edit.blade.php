@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-    Category Edit Page
+    Slider Edit Page
 @endsection
 
 @section('body')
@@ -23,23 +23,27 @@
                     <div class="col-sm-12">
                         <div class="card box-shadow-0">
                             <div class="card-header border-bottom">
-                                <h4 class="card-title">Category Edit Form</h4>
+                                <h4 class="card-title">Slider Edit Form</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data" id="categoryForm">
+                                <form action="{{ route('slider.update', $slider->id) }}" method="POST" enctype="multipart/form-data" id="categoryForm">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
-                                        <label for="nameInput">Name</label>
-                                        <input type="text" name="name" required value="{{ $category->name }}" class="form-control" id="nameInput" placeholder="Name">
+                                        <label for="nameInput">Title</label>
+                                        <input type="text" name="title" required value="{{ $slider->title }}" class="form-control" id="nameInput" placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nameInput">Link</label>
+                                        <input type="text" name="link"  value="{{ $slider->link }}" class="form-control" id="nameInput" placeholder="Link">
                                     </div>
                                     <div class="form-group">
                                         <label for="formFile" class="form-label">Image</label>
                                         <input class="form-control file-input" type="file" name="image" id="formFile" onchange="previewImage(this)">
-                                        <img id="imagePreview" src="{{ asset($category->image) }}" alt="Category Image Preview" class="img-fluid {{ $category->image ? '' : 'd-none' }}" height="80" width="120">
+                                        <img id="imagePreview" src="{{ asset($slider->image) }}" alt="Category Image Preview" class="img-fluid {{ $slider->image ? '' : 'd-none' }}" height="80" width="120">
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary btn-w-md mt-3">Submit</button>
+                                        <button type="submit" class="btn btn-primary btn-w-md mt-3">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -69,3 +73,4 @@
         }
     </script>
 @endsection
+

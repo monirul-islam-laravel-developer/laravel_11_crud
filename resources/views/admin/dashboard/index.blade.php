@@ -2,7 +2,6 @@
 @section('title')
     Dashboard
 @endsection
-
 @section('body')
     <div class="app-content main-content mt-0">
         <div class="side-app">

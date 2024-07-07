@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @section('title')
-    Category Add Page
+    Privacy Policy Page
 @endsection
 
 @section('body')
@@ -23,22 +23,24 @@
                     <div class="col-sm-12">
                         <div class="card box-shadow-0">
                             <div class="card-header border-bottom">
-                                <h4 class="card-title">Category Add Form</h4>
+                                <h4 class="card-title">Privacy Policy Form</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data" id="categoryForm">
+                                <form action="{{ isset($privacypolicy) ? route('privacyPolicy.update', $privacypolicy->id) : route('privacyPolicy.store') }}" method="POST" enctype="multipart/form-data" id="logoForm">
                                     @csrf
+                                    @if(isset($privacypolicy))
+                                        @method('PUT')
+                                    @endif
                                     <div class="form-group">
-                                        <label for="exampleInputEmail2">Name</label>
-                                        <input type="text" name="name" required class="form-control" id="exampleInputEmail2" placeholder="Name">
+                                        <label for="privacy_policy">Privacy & Policy</label>
+                                        <textarea class="form-control" id="summernote" name="privacy_policy">{!! old('privacy_policy', $privacypolicy->privacy_policy ?? '') !!}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="formFile" class="form-label">Image</label>
-                                        <input class="form-control file-input" type="file" name="image" id="formFile" onchange="previewImage(this)">
-                                        <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid d-none" height="80" width="120">
+                                        <label for="condition">Condition</label>
+                                        <textarea class="form-control" name="condition" id="summernote1">{!! old('condition', $privacypolicy->condition ?? '') !!}</textarea>
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary btn-w-md mt-3">Submit</button>
+                                        <button type="submit" class="btn btn-primary btn-w-md mt-3">{{ isset($privacypolicy) ? 'Update' : 'Submit' }}</button>
                                     </div>
                                 </form>
                             </div>
@@ -48,23 +50,16 @@
             </div>
         </div>
     </div>
-
     <script>
-        function previewImage(input) {
-            var preview = document.getElementById('imagePreview');
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none'); // Show the preview image
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.src = '#';
-                preview.classList.add('d-none'); // Hide the preview image if no file selected
-            }
-        }
+        $('#summernote').summernote({
+            tabsize: 2,
+            height: 100
+        });
+    </script>
+    <script>
+        $('#summernote1').summernote({
+            tabsize: 2,
+            height: 100
+        });
     </script>
 @endsection
