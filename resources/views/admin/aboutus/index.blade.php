@@ -1,7 +1,11 @@
 @extends('admin.master.master')
 
 @section('title')
+<<<<<<< HEAD
     About Us Page qq
+=======
+    About Us Page
+>>>>>>> 5c750c46c0d8bc6955186916289d67433f38f62d
 @endsection
 
 @section('body')
